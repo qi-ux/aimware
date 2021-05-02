@@ -1,4 +1,4 @@
-local version = "1.7"
+local version = "version 1.7"
 
 local function http_update(version, version_url, download_url)
     local script_name = GetScriptName()

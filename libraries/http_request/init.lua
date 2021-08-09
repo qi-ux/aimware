@@ -287,7 +287,7 @@ request = {
 			end
 
 			out = {
-				body = table.concat(out_buffer),
+				body = out_buffer and table.concat(out_buffer),
 				headers = parsed_headers,
 				raw_cookies = raw_cookies,
 				set_cookies = set_cookies,

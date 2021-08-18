@@ -6,14 +6,20 @@ if not pcall(ffi.sizeof, "FILE") then
 end
 
 ffi.cdef [[
-    bool CreateDirectoryA(const char*, const char*);
-    FILE* fopen(const char*, const char*);
-    int fclose(FILE*);
     int ftell(FILE*);
+    int fclose(FILE*);
     int fseek(FILE*, int, int);
-    size_t fwrite(const void*, size_t, size_t, FILE*);
+    char* _getcwd(char* buf, size_t size);
+    FILE* fopen(const char*, const char*);
     size_t fread(void*, size_t, size_t, FILE*);
+    bool CreateDirectoryA(const char*, const char*);
+    size_t fwrite(const void*, size_t, size_t, FILE*);
 ]]
+
+local buf = ffi.new("uint8_t[257]")
+ffi.C._getcwd(buf, 256)
+local path = ffi.string(buf)
+C.CreateDirectoryA(("%s\\aimware"):format(path), nil)
 
 local function cdir(name)
     local dirs = {}
@@ -31,7 +37,7 @@ local function cdir(name)
     )
 end
 
-function readfile(name)
+local function readfile(name)
     local fp = ffi.gc(C.fopen(name, "rb"), C.fclose)
     if fp == nil then
         return nil, name .. ": No such file or directory", 2
@@ -46,7 +52,7 @@ function readfile(name)
     return ffi.string(buf, sz)
 end
 
-function writefile(name, ...)
+local function writefile(name, ...)
     cdir(name)
     local fp = ffi.gc(C.fopen(name, "wb"), C.fclose)
     if fp == nil then
@@ -61,8 +67,8 @@ function writefile(name, ...)
     ffi.gc(fp, nil)
 end
 
-package = {
-    path = ("%s.lua;%s.lua;%s.lua;%s.lua;%s.lua;"):format(".\\?", "aimware\\?", "aimware\\?\\init", "aimware\\libraries\\?", "aimware\\libraries\\?\\init"),
+local package = {
+    path = "",
     loaded = {
         _G = _G,
         bit = bit,
@@ -80,7 +86,25 @@ package = {
     }
 }
 
-function require(name)
+local function setp_path()
+    local function apath(path)
+        package.path = package.path .. ("%s.lua;\n"):format(path)
+    end
+
+    local path_t = {"lua", "lib", "libraries"}
+
+    apath(("%s"):format((".\\aimware\\?")))
+    for k, v in pairs(path_t) do
+        apath((".\\aimware\\%s\\?"):format(v))
+    end
+
+    apath(("%s\\aimware\\?\\init"):format(path))
+    for k, v in pairs(path_t) do
+        apath(("%s\\aimware\\%s\\?\\init"):format(path, v))
+    end
+end
+
+local function require(name)
     if not (package.loaded[name] or package.preload[name]) then
         local pts = {}
         package.path:gsub(
@@ -108,4 +132,15 @@ function require(name)
     return package.loaded[name] or package.preload[name]()
 end
 
-gui.Command("lua.run gui.Reference('Menu'):SetActive(true)")
+local function init()
+    gui.Command("lua.run gui.Reference('Menu'):SetActive(true)")
+    setp_path()
+    _G.path = path
+    _G.readfile = readfile
+    _G.writefile = writefile
+    _G.package = package
+    _G.require = require
+end
+
+init()
+--load(http.Get("https://raw.githubusercontent.com/qi-ux/aimware/main/autorun.lua"))

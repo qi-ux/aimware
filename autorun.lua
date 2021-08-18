@@ -88,7 +88,7 @@ local package = {
 
 local function setp_path()
     local function apath(path)
-        package.path = package.path .. ("%s.lua;\n"):format(path)
+        package.path = package.path .. ("%s.lua;"):format(path)
     end
 
     local path_t = {"lua", "lib", "libraries"}
@@ -140,6 +140,7 @@ local function init()
     _G.writefile = writefile
     _G.package = package
     _G.require = require
+    _G.ffi = nil
 end
 
 init()

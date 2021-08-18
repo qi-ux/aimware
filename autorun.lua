@@ -1,3 +1,5 @@
+--load(http.Get("https://raw.githubusercontent.com/qi-ux/aimware/main/autorun.lua"))
+
 local ffi = ffi
 local C = ffi.C
 
@@ -144,4 +146,3 @@ local function init()
 end
 
 init()
---load(http.Get("https://raw.githubusercontent.com/qi-ux/aimware/main/autorun.lua"))

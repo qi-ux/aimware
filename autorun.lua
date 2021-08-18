@@ -19,7 +19,7 @@ ffi.cdef [[
 ]]
 
 local buf = ffi.new("uint8_t[257]")
-ffi.C._getcwd(buf, 256)
+C._getcwd(buf, 256)
 local path = ffi.string(buf)
 C.CreateDirectoryA(("%s\\aimware"):format(path), nil)
 
@@ -130,19 +130,18 @@ local function require(name)
             end
         end
     end
-
     return package.loaded[name] or package.preload[name]()
 end
 
 local function init()
     gui.Command("lua.run gui.Reference('Menu'):SetActive(true)")
     setp_path()
+
     _G.path = path
     _G.readfile = readfile
     _G.writefile = writefile
     _G.package = package
     _G.require = require
-    _G.ffi = nil
 end
 
 init()

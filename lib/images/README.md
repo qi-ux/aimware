@@ -1,3 +1,7 @@
+# _[raw](https://raw.githubusercontent.com/qi-ux/aimware/main/lib/images/init.lua)_
+
+---
+
 # _[module](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md)_
 
 ---

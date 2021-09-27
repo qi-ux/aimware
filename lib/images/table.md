@@ -34,7 +34,7 @@ _`number: height`_
 
 ---
 
-# _[images](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md).height_
+# _[images](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md).rgba_
 
 ## _syntax_
 

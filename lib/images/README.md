@@ -11,3 +11,5 @@
 ---
 
 # _[examples](https://github.com/qi-ux/aimware/blob/main/lib/images/examples.md)_
+
+---

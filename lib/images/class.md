@@ -1,4 +1,4 @@
-# _[images](doc:YyqSLLXz):measure_
+# _[images](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md):measure_
 
 ## _syntax_
 
@@ -15,7 +15,7 @@ _`return: width, height`_
 
 ---
 
-# _[images](doc:YyqSLLXz):draw_
+# _[images](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md):draw_
 
 ## _syntax_
 

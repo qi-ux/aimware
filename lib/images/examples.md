@@ -180,11 +180,10 @@ callbacks.Register(
     function()
         print(
             weapon_icon.type,
-            weapon_icon.rgba,
             weapon_icon.width,
             weapon_icon.height,
             weapon_icon.scale,
-            weapon_icon.contents,
+            weapon_icon.rgba,
             weapon_icon.textures
         )
     end

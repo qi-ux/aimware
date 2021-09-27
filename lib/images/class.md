@@ -1,8 +1,8 @@
-# _[images](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md):measure_
+# _[image](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md):measure_
 
 ## _syntax_
 
-_`images:measure(width, height)`_
+_`image:measure(width, height)`_
 
 ## _parameters_
 
@@ -15,11 +15,11 @@ _`return: width, height`_
 
 ---
 
-# _[images](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md):draw_
+# _[image](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md):draw_
 
 ## _syntax_
 
-_`images:draw(x, y, width, height, r, g, b, a, force_same_res_render)`_
+_`image:draw(x, y, width, height, r, g, b, a, force_same_res_render)`_
 
 ## _parameters_
 

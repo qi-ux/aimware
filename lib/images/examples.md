@@ -138,7 +138,7 @@ callbacks.Register(
 )
 ```
 
-# _[images](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md):measure_
+# _[image](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md):measure_
 
 ```lua
 local images = require "images"
@@ -155,7 +155,7 @@ callbacks.Register(
 )
 ```
 
-# _[images](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md):draw_
+# _[image](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md):draw_
 
 ```lua
 local images = require "images"

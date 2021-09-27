@@ -110,7 +110,7 @@ callbacks.Register(
 )
 ```
 
-# _[images](doc:YyqSLLXz):measure_
+# _[images](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md):measure_
 
 ```lua
 local images = require "images"
@@ -126,7 +126,7 @@ callbacks.Register(
 )
 ```
 
-# _[images](doc:YyqSLLXz):draw_
+# _[images](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md):draw_
 
 ```lua
 local images = require "images"
@@ -140,7 +140,7 @@ callbacks.Register(
 )
 ```
 
-# _[table](doc:5Egd1y0M)_
+# _[table](https://github.com/qi-ux/aimware/blob/main/lib/images/table.md)_
 
 ```lua
 local images = require "images"
@@ -149,7 +149,7 @@ local weapon_icon = images.get_weapon_icon("awp")
 callbacks.Register(
     "Draw",
     function()
-        print(weapon_icon.type, weapon_icon.width, weapon_icon.height, weapon_icon.contents, weapon_icon.textures)
+        print(weapon_icon.type, weapon_icon.width, weapon_icon.height, weapon_icon.rgba, weapon_icon.contents, weapon_icon.textures)
     end
 )
 ```

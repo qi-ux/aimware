@@ -109,7 +109,7 @@ local function image_draw(self, x, y, width, height, r, g, b, a, force_same_res_
 				width, height = self.width, self.height
 			end
 
-			local texture = draw.CreateTexture(self.contents, width, height)
+			local texture = draw.CreateTexture(self.rgba, width, height)
 			if texture == nil then
 				self.textures[id] = INVALID_TEXTURE
 				error("failed to load texture for " .. width .. "x" .. height, 2)
@@ -149,7 +149,7 @@ local function load_png(contents)
 					type = "png",
 					width = width,
 					height = height,
-					contents = rgba,
+					rgba = rgba,
 					textures = {}
 				},
 				image_mt
@@ -171,7 +171,7 @@ local function load_jpg(contents)
 					type = "jpg",
 					width = width,
 					height = height,
-					contents = rgba,
+					rgba = rgba,
 					textures = {}
 				},
 				image_mt
@@ -195,7 +195,7 @@ local function load_svg(contents, scale)
 					width = width,
 					height = height,
 					scale = scale,
-					contents = rgba,
+					rgba = rgba,
 					textures = {}
 				},
 				image_mt
@@ -230,7 +230,7 @@ local function load_rgba(contents, width, height)
 			type = "rgba",
 			width = width,
 			height = height,
-			contents = contents,
+			rgba = contents,
 			textures = {[string.format("%f_%f", width, height)] = texture}
 		},
 		image_mt

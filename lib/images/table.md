@@ -46,18 +46,6 @@ _`string: rgba`_
 
 ---
 
-# _[images](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md).contents_
-
-## _syntax_
-
-_`images.contents`_
-
-## _return_
-
-_`string: contents`_
-
----
-
 # _[images](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md).textures_
 
 ## _syntax_

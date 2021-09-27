@@ -105,11 +105,7 @@ local function image_draw(self, x, y, width, height, r, g, b, a, force_same_res_
 
 	if texture == nil then
 		if ({next(self.textures)})[2] == nil or force_same_res_render or force_same_res_render == nil then
-			if self.type == "rgba" then
-				width, height = self.width, self.height
-			end
-
-			local texture = draw.CreateTexture(self.rgba, width, height)
+			local texture = draw.CreateTexture(self.rgba, self.width, self.height)
 			if texture == nil then
 				self.textures[id] = INVALID_TEXTURE
 				error("failed to load texture for " .. width .. "x" .. height, 2)

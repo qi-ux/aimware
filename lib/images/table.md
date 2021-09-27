@@ -34,6 +34,18 @@ _`number: height`_
 
 ---
 
+# _[images](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md).height_
+
+## _syntax_
+
+_`images.rgba`_
+
+## _return_
+
+_`string: rgba`_
+
+---
+
 # _[images](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md).contents_
 
 ## _syntax_

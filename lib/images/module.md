@@ -50,13 +50,14 @@ _return: [table](https://github.com/qi-ux/aimware/blob/main/lib/images/table.md)
 
 ## _syntax_
 
-_`images.load_svg(contents)`_
+_`images.load_svg(contents, scale)`_
 
 ## _parameters_
 
 | _name_     | _type_   | _optional_ | _description_                |
 | ---------- | -------- | ---------- | ---------------------------- |
 | _contents_ | _string_ | _-_        | _`only supports svg format`_ |
+| _scale_    | _number_ | _+_        | _`svg scale`_ |
 
 _return: [table](https://github.com/qi-ux/aimware/blob/main/lib/images/table.md)_
 

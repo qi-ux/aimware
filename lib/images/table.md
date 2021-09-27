@@ -1,4 +1,4 @@
-# _[images](doc:YyqSLLXz).type_
+# _[images](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md).type_
 
 ## _syntax_
 
@@ -10,7 +10,7 @@ _`string: picture type`_
 
 ---
 
-# _[images](doc:YyqSLLXz).width_
+# _[images](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md).width_
 
 ## _syntax_
 
@@ -22,7 +22,7 @@ _`number: width`_
 
 ---
 
-# _[images](doc:YyqSLLXz).height_
+# _[images](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md).height_
 
 ## _syntax_
 
@@ -34,7 +34,7 @@ _`number: height`_
 
 ---
 
-# _[images](doc:YyqSLLXz).contents_
+# _[images](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md).contents_
 
 ## _syntax_
 
@@ -46,7 +46,7 @@ _`string: contents`_
 
 ---
 
-# _[images](doc:YyqSLLXz).textures_
+# _[images](https://github.com/qi-ux/aimware/blob/main/lib/images/module.md).textures_
 
 ## _syntax_
 

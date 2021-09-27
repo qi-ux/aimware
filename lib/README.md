@@ -1,2 +1,2 @@
-# aimware
-aimware 's lua script
+# lib
+lib 's lua script

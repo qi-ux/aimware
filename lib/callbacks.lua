@@ -60,7 +60,7 @@ hook_gui_panel =
 local override_view_t, hook_override_view = {}, nil
 hook_override_view =
     vtable.hook(
-    ffi.cast('uintptr_t*', 769712256),
+        ffi.cast('uintptr_t*', ffi.cast('int', base_client.interface) + 4537352),
     18,
     'void(__thiscall*)(uintptr_t*, CViewSetup*)',
     function(this, setup)

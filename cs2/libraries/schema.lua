@@ -1,5 +1,6 @@
+---@diagnostic disable-next-line: undefined-global
 local ffi = ffi or require "ffi"
-local table_new = debug.getregistry()._PRELOAD["table.new"] or require "table.new"
+local table_new = debug.getregistry()._PRELOAD["table.new"]() or require "table.new"
 
 local C = ffi.C
 

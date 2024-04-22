@@ -15,7 +15,7 @@ local json = (function()local a={_version="0.1.2"}local b;local c={["\\"]="\\",[
 
 local data = {
 	version = "0.1",
-	hwid = json.decode(http.Get("cloud/data.json"))
+	hwid = json.decode(http.Get("https://raw.githubusercontent.com/qi-ux/aimware/main/data.json"))
 }
 
 xpcall(function() error("") end, function(msg)

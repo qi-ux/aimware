@@ -64,76 +64,6 @@ xpcall(function()
     ---@format disable-next
     local native_GetEntityInstance = (function(a)local b=ffi.cast("void*(__thiscall*)(void*, int)",mem.FindPattern("client.dll","81 FA ?? ?? ?? ?? 77 36 8B C2 C1 F8 09 83 F8 3F 77 2C 48 98"))return function(c)return b(a,c)end end)(CGameEntitySystem)
 
-    local agents = {
-        {
-            ["#CSGO_CustomPlayer_tm_balkan_variantf"] = "characters/models/tm_balkan/tm_balkan_variantf.vmdl",
-            ["#CSGO_CustomPlayer_tm_balkan_variantg"] = "characters/models/tm_balkan/tm_balkan_variantg.vmdl",
-            ["#CSGO_CustomPlayer_tm_balkan_varianth"] = "characters/models/tm_balkan/tm_balkan_varianth.vmdl",
-            ["#CSGO_CustomPlayer_tm_balkan_varianti"] = "characters/models/tm_balkan/tm_balkan_varianti.vmdl",
-            ["#CSGO_CustomPlayer_tm_balkan_variantj"] = "characters/models/tm_balkan/tm_balkan_variantj.vmdl",
-            ["#CSGO_CustomPlayer_tm_balkan_variantk"] = "characters/models/tm_balkan/tm_balkan_variantk.vmdl",
-            ["#CSGO_CustomPlayer_tm_balkan_variantl"] = "characters/models/tm_balkan/tm_balkan_variantl.vmdl",
-            ["#CSGO_CustomPlayer_tm_jungle_raider_varianta"] = "characters/models/tm_jungle_raider/tm_jungle_raider_varianta.vmdl",
-            ["#CSGO_CustomPlayer_tm_jungle_raider_variantb"] = "characters/models/tm_jungle_raider/tm_jungle_raider_variantb.vmdl",
-            ["#CSGO_CustomPlayer_tm_jungle_raider_variantb2"] = "characters/models/tm_jungle_raider/tm_jungle_raider_variantb2.vmdl",
-            ["#CSGO_CustomPlayer_tm_jungle_raider_variantc"] = "characters/models/tm_jungle_raider/tm_jungle_raider_variantc.vmdl",
-            ["#CSGO_CustomPlayer_tm_jungle_raider_variantd"] = "characters/models/tm_jungle_raider/tm_jungle_raider_variantd.vmdl",
-            ["#CSGO_CustomPlayer_tm_jungle_raider_variante"] = "characters/models/tm_jungle_raider/tm_jungle_raider_variante.vmdl",
-            ["#CSGO_CustomPlayer_tm_jungle_raider_variantf"] = "characters/models/tm_jungle_raider/tm_jungle_raider_variantf.vmdl",
-            ["#CSGO_CustomPlayer_tm_jungle_raider_variantf2"] = "characters/models/tm_jungle_raider/tm_jungle_raider_variantf2.vmdl",
-            ["#CSGO_CustomPlayer_tm_leet_variantf"] = "characters/models/tm_leet/tm_leet_variantf.vmdl",
-            ["#CSGO_CustomPlayer_tm_leet_variantg"] = "characters/models/tm_leet/tm_leet_variantg.vmdl",
-            ["#CSGO_CustomPlayer_tm_leet_varianth"] = "characters/models/tm_leet/tm_leet_varianth.vmdl",
-            ["#CSGO_CustomPlayer_tm_leet_varianti"] = "characters/models/tm_leet/tm_leet_varianti.vmdl",
-            ["#CSGO_CustomPlayer_tm_leet_variantj"] = "characters/models/tm_leet/tm_leet_variantj.vmdl",
-            ["#CSGO_CustomPlayer_tm_phoenix_variantf"] = "characters/models/tm_phoenix/tm_phoenix_variantf.vmdl",
-            ["#CSGO_CustomPlayer_tm_phoenix_variantg"] = "characters/models/tm_phoenix/tm_phoenix_variantg.vmdl",
-            ["#CSGO_CustomPlayer_tm_phoenix_varianth"] = "characters/models/tm_phoenix/tm_phoenix_varianth.vmdl",
-            ["#CSGO_CustomPlayer_tm_phoenix_varianti"] = "characters/models/tm_phoenix/tm_phoenix_varianti.vmdl",
-            ["#CSGO_CustomPlayer_tm_professional_varf"] = "characters/models/tm_professional/tm_professional_varf.vmdl",
-            ["#CSGO_CustomPlayer_tm_professional_varf1"] = "characters/models/tm_professional/tm_professional_varf1.vmdl",
-            ["#CSGO_CustomPlayer_tm_professional_varf2"] = "characters/models/tm_professional/tm_professional_varf2.vmdl",
-            ["#CSGO_CustomPlayer_tm_professional_varf3"] = "characters/models/tm_professional/tm_professional_varf3.vmdl",
-            ["#CSGO_CustomPlayer_tm_professional_varf4"] = "characters/models/tm_professional/tm_professional_varf4.vmdl",
-            ["#CSGO_CustomPlayer_tm_professional_varf5"] = "characters/models/tm_professional/tm_professional_varf5.vmdl",
-            ["#CSGO_CustomPlayer_tm_professional_varg"] = "characters/models/tm_professional/tm_professional_varg.vmdl",
-            ["#CSGO_CustomPlayer_tm_professional_varh"] = "characters/models/tm_professional/tm_professional_varh.vmdl",
-            ["#CSGO_CustomPlayer_tm_professional_vari"] = "characters/models/tm_professional/tm_professional_vari.vmdl",
-            ["#CSGO_CustomPlayer_tm_professional_varj"] = "characters/models/tm_professional/tm_professional_varj.vmdl",
-        },
-        {
-            ["#CSGO_CustomPlayer_ctm_diver_varianta"] = "characters/models/ctm_diver/ctm_diver_varianta.vmdl",
-            ["#CSGO_CustomPlayer_ctm_diver_variantb"] = "characters/models/ctm_diver/ctm_diver_variantb.vmdl",
-            ["#CSGO_CustomPlayer_ctm_diver_variantc"] = "characters/models/ctm_diver/ctm_diver_variantc.vmdl",
-            ["#CSGO_CustomPlayer_ctm_fbi_variantb"] = "characters/models/ctm_fbi/ctm_fbi_variantb.vmdl",
-            ["#CSGO_CustomPlayer_ctm_fbi_variantf"] = "characters/models/ctm_fbi/ctm_fbi_variantf.vmdl",
-            ["#CSGO_CustomPlayer_ctm_fbi_variantg"] = "characters/models/ctm_fbi/ctm_fbi_variantg.vmdl",
-            ["#CSGO_CustomPlayer_ctm_fbi_varianth"] = "characters/models/ctm_fbi/ctm_fbi_varianth.vmdl",
-            ["#CSGO_CustomPlayer_ctm_gendarmerie_varianta"] = "characters/models/ctm_gendarmerie/ctm_gendarmerie_varianta.vmdl",
-            ["#CSGO_CustomPlayer_ctm_gendarmerie_variantb"] = "characters/models/ctm_gendarmerie/ctm_gendarmerie_variantb.vmdl",
-            ["#CSGO_CustomPlayer_ctm_gendarmerie_variantc"] = "characters/models/ctm_gendarmerie/ctm_gendarmerie_variantc.vmdl",
-            ["#CSGO_CustomPlayer_ctm_gendarmerie_variantd"] = "characters/models/ctm_gendarmerie/ctm_gendarmerie_variantd.vmdl",
-            ["#CSGO_CustomPlayer_ctm_gendarmerie_variante"] = "characters/models/ctm_gendarmerie/ctm_gendarmerie_variante.vmdl",
-            ["#CSGO_CustomPlayer_ctm_sas_variantf"] = "characters/models/ctm_sas/ctm_sas_variantf.vmdl",
-            ["#CSGO_CustomPlayer_ctm_sas_variantg"] = "characters/models/ctm_sas/ctm_sas_variantg.vmdl",
-            ["#CSGO_CustomPlayer_ctm_st6_variante"] = "characters/models/ctm_st6/ctm_st6_variante.vmdl",
-            ["#CSGO_CustomPlayer_ctm_st6_variantg"] = "characters/models/ctm_st6/ctm_st6_variantg.vmdl",
-            ["#CSGO_CustomPlayer_ctm_st6_varianti"] = "characters/models/ctm_st6/ctm_st6_varianti.vmdl",
-            ["#CSGO_CustomPlayer_ctm_st6_variantj"] = "characters/models/ctm_st6/ctm_st6_variantj.vmdl",
-            ["#CSGO_CustomPlayer_ctm_st6_variantk"] = "characters/models/ctm_st6/ctm_st6_variantk.vmdl",
-            ["#CSGO_CustomPlayer_ctm_st6_variantl"] = "characters/models/ctm_st6/ctm_st6_variantl.vmdl",
-            ["#CSGO_CustomPlayer_ctm_st6_variantm"] = "characters/models/ctm_st6/ctm_st6_variantm.vmdl",
-            ["#CSGO_CustomPlayer_ctm_st6_variantn"] = "characters/models/ctm_st6/ctm_st6_variantn.vmdl",
-            ["#CSGO_CustomPlayer_ctm_swat_variante"] = "characters/models/ctm_swat/ctm_swat_variante.vmdl",
-            ["#CSGO_CustomPlayer_ctm_swat_variantf"] = "characters/models/ctm_swat/ctm_swat_variantf.vmdl",
-            ["#CSGO_CustomPlayer_ctm_swat_variantg"] = "characters/models/ctm_swat/ctm_swat_variantg.vmdl",
-            ["#CSGO_CustomPlayer_ctm_swat_varianth"] = "characters/models/ctm_swat/ctm_swat_varianth.vmdl",
-            ["#CSGO_CustomPlayer_ctm_swat_varianti"] = "characters/models/ctm_swat/ctm_swat_varianti.vmdl",
-            ["#CSGO_CustomPlayer_ctm_swat_variantj"] = "characters/models/ctm_swat/ctm_swat_variantj.vmdl",
-            ["#CSGO_CustomPlayer_ctm_swat_variantk"] = "characters/models/ctm_swat/ctm_swat_variantk.vmdl",
-        }
-    }
-
     local knifes = {
         ["#SFUI_WPNHUD_KnifeBayonet"] = "weapons/models/knife/knife_bayonet/weapon_knife_bayonet.vmdl",
         ["#SFUI_WPNHUD_KnifeCSS"] = "weapons/models/knife/knife_css/weapon_knife_css.vmdl",
@@ -157,17 +87,7 @@ xpcall(function()
         ["#SFUI_WPNHUD_knife_kukri"] = "weapons/models/knife/knife_kukri/weapon_knife_kukri.vmdl",
     }
 
-    local localizes = {
-    }
-
-    for key in pairs(agents[1]) do
-        localizes[localize(key)] = key
-    end
-
-    for key in pairs(agents[2]) do
-        localizes[localize(key)] = key
-    end
-
+    local localizes = {}
     for key in pairs(knifes) do
         localizes[localize(key)] = key
     end
@@ -179,31 +99,8 @@ xpcall(function()
         return unpack(res)
     end
 
-    local ref = gui.Reference("Misc", "General", "Restrictions")
+    local ref = gui.Reference("Visuals", "Skins (Beta)", "List")
     local knife_model_reference = gui.Combobox(ref, "model.knife", localize("#Inv_Category_melee"), localize_key(knifes))
-    local agent_model_reference = {
-        gui.Combobox(ref, "model.agent.t", string.format("%s %s", localize("#inv_filter_t"), localize("#Type_CustomPlayer")), localize_key(agents[1])),
-        gui.Combobox(ref, "model.agent.ct", string.format("%s %s", localize("#inv_filter_ct"), localize("#Type_CustomPlayer")), localize_key(agents[2]))
-    }
-
-    set_event_callback("frame_render_end", function()
-        local localpawn = entities.GetLocalPawn()
-        if localpawn == nil then return end
-
-        local team = localpawn:GetTeamNumber()
-        if not (team == 2 or team == 3) then return end
-
-        local agent = agent_model_reference[team - 1]:GetString()
-        if not agent then return end
-
-        local model = agents[team - 1][localizes[agent]]
-        if not model or localpawn:GetModelName() == model then return end
-
-        local instance = native_GetEntityInstance(localpawn:GetIndex())
-        if instance == nil then return end
-
-        fnSetModel(instance, model)
-    end)
 
     local fnUpdateSubclass = ffi.cast("void*(__fastcall*)(void*)", mem.FindPattern("client.dll", "40 53 48 83 EC 30 48 8B 41 10 48 8B D9 8B 50 30"))
     local native_UpdateVData = vtable_thunk(180, "void(__thiscall*)(void*)")

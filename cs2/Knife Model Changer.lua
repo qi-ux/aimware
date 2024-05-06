@@ -2,9 +2,35 @@ xpcall(function()
     local ffi = assert(ffi, "ffi is not enabled")
     local C = ffi.C
 
+    local create_interface
+    do
+        ---@format disable-next
+        local fnv1a = function(a)local b=2166136261;for c in a:gmatch(".")do b=bit.bxor(b,c:byte())b=bit.band(b*16777619,2^32-1)end;return b end
+
+        if not pcall(ffi.sizeof, "instantiateinterfacefn") then
+            ffi.cdef [[
+                typedef void*(__cdecl* instantiateinterfacefn)();
+
+                typedef struct interfacereg_t {
+                    instantiateinterfacefn create;
+                    const char* name;
+                    struct interfacereg_t* next;
+                };
+            ]]
+        end
+
+        function create_interface(modname, version)
+            local address = ffi.cast("uintptr_t", mem.FindPattern(modname, "4C 8B 0D ?? ?? ?? ?? 4C 8B D2 4C 8B D9"))
+            local list = ffi.cast("struct interfacereg_t**", address + ffi.cast("int32_t*", address + 3)[0] + 7)[0]
+
+            while list ~= nil do
+                if fnv1a(ffi.string(list.name)) == fnv1a(version) then return list.create() end
+                list = list.next
+            end
+        end
+    end
+
     ---@diagnostic disable
-    ---@format disable-next
-    local create_interface = (function()ffi.cdef"void* GetModuleHandleA(const char*)"ffi.cdef"void* GetProcAddress(void*, const char*)"local a=ffi.typeof"void*(__cdecl*)(const char*, int*)"return function(b,c)local d=C.GetModuleHandleA(b)if d==nil then return nil end;local e=C.GetProcAddress(d,"CreateInterface")if e==nil then return nil end;local f=ffi.cast(a,e)(c,nil)if f==nil then return nil end;return f end end)()
     ---@format disable-next
     local vtable_bind, vtable_thunk = (function()local a=(function()local b=ffi.typeof"void***"return function(c,d,e)return ffi.cast(e,ffi.cast(b,c)[0][d])end end)()local function f(c,d,e,...)local g=a(c,d,ffi.typeof(e,...))return function(...)return g(c,...)end end;local function h(d,e,...)e=ffi.typeof(e,...)return function(c,...)return a(c,d,e)(c,...)end end;return f,h end)()
     ---@format disable-next
@@ -13,6 +39,7 @@ xpcall(function()
     ---@format disable-next
     local detour = (function()local a={}ffi.cdef"int VirtualProtect(void*, uint64_t, unsigned long, unsigned long*)"local b=0x40;function a.new(c,d,e)local f=12;local g=ffi.new("uint8_t[?]",f)ffi.copy(ffi.cast("void*",g),ffi.cast("const void*",e),f)local h=ffi.cast(c,e)local i=ffi.new("uint8_t[12]",{0x48,0xB8,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xFF,0xE0})ffi.cast("int64_t*",i+2)[0]=ffi.cast("int64_t",ffi.cast("void*",ffi.cast(c,d)))local j=ffi.new"unsigned long[1]"return setmetatable({},{__call=function(self,...)self:remove()local k=h(...)self:install()return k end,__index={install=function(self)C.VirtualProtect(ffi.cast("void*",e),f,b,j)ffi.copy(ffi.cast("void*",e),ffi.cast("const void*",i),f)C.VirtualProtect(ffi.cast("void*",e),f,j[0],j)return self end,remove=function(self)C.VirtualProtect(ffi.cast("void*",e),f,b,j)ffi.copy(ffi.cast("void*",e),ffi.cast("const void*",g),f)C.VirtualProtect(ffi.cast("void*",e),f,j[0],j)return self end}}):install()end;return a end)()
     ---@diagnostic enable
+
     local localize = (function()
         local native_FindSafe = vtable_bind(create_interface("localize.dll", "Localize_001"), 17, "const char*(__thiscall*)(void*, const char*)")
         return function(key) return ffi.string(native_FindSafe(key)) end
@@ -88,6 +115,7 @@ xpcall(function()
     }
 
     local localizes = {}
+
     for key in pairs(knifes) do
         localizes[localize(key)] = key
     end
@@ -99,11 +127,10 @@ xpcall(function()
         return unpack(res)
     end
 
-    local ref = gui.Reference("Visuals", "Skins (Beta)", "List")
+    local ref = gui.Reference("Misc", "General", "Restrictions")
     local knife_model_reference = gui.Combobox(ref, "model.knife", localize("#Inv_Category_melee"), localize_key(knifes))
 
     local fnUpdateSubclass = ffi.cast("void*(__fastcall*)(void*)", mem.FindPattern("client.dll", "40 53 48 83 EC 30 48 8B 41 10 48 8B D9 8B 50 30"))
-    local native_UpdateVData = vtable_thunk(180, "void(__thiscall*)(void*)")
 
     local subclassid_t =
     {
@@ -138,15 +165,6 @@ xpcall(function()
         local localpawn_instance = ffi.cast("uintptr_t", native_GetEntityInstance(localpawn:GetIndex()))
         if localpawn_instance == 0 then return end
 
-        local weapon_services = ffi.cast("uintptr_t*", localpawn_instance + schema("C_BasePlayerPawn", "m_pWeaponServices"))[0]
-        if weapon_services == 0 then return end
-
-        local activeweapon_index = bit.band(ffi.cast("uintptr_t*", weapon_services + schema("CPlayer_WeaponServices", "m_hActiveWeapon"))[0], 0x7fff)
-        if activeweapon_index == 0xffffffff then return end
-
-        local activeweapon_instance = native_GetEntityInstance(activeweapon_index)
-        if activeweapon_instance == nil then return end
-
         local viewmodel = unpack(entities.FindByClass("C_CSGOViewModel"))
         if viewmodel == nil then return end
 
@@ -159,20 +177,23 @@ xpcall(function()
         local viewmodelweapon_index = bit.band(ffi.cast("uintptr_t*", ffi.cast("uintptr_t", viewmodel_instance) + schema("C_BaseViewModel", "m_hWeapon"))[0], 0x7fff)
         if viewmodelweapon_index == 0xffffffff then return end
 
+        local weapon_services = ffi.cast("uintptr_t*", localpawn_instance + schema("C_BasePlayerPawn", "m_pWeaponServices"))[0]
+        if weapon_services == 0 then return end
+
+        local activeweapon_index = bit.band(ffi.cast("uintptr_t*", weapon_services + schema("CPlayer_WeaponServices", "m_hActiveWeapon"))[0], 0x7fff)
+        if activeweapon_index == 0xffffffff then return end
+
+        local activeweapon_instance = native_GetEntityInstance(activeweapon_index)
+        if activeweapon_instance == nil then return end
+
         fnSetModel(activeweapon_instance, model)
+
         if viewmodelweapon_index == activeweapon_index then fnSetModel(viewmodel_instance, model) end
         ffi.cast("uintptr_t*", ffi.cast("uintptr_t*", ffi.cast("uintptr_t", viewmodel_instance) + 0xd08)[0] + 0x2e0)[0] = 0
 
-        --修复特殊检视动画 updata classid
-        ffi.cast("uint32_t*", ffi.cast("uintptr_t", activeweapon_instance) + schema("C_BaseEntity", "m_nSubclassID"))[0] = subclassid_t[localizes[knife_model_reference:GetString()]]
+        local subclassid = ffi.cast("uint32_t*", ffi.cast("uintptr_t", activeweapon_instance) + schema("C_BaseEntity", "m_nSubclassID"))
+        subclassid[0] = subclassid_t[localizes[knife_model_reference:GetString()]]
         fnUpdateSubclass(activeweapon_instance)
-
-        --会崩溃 hh
-        -- local weapon_vdata = ffi.cast("void**", ffi.cast("uintptr_t", subclassid) + 0x8)[0]
-        -- if weapon_vdata == nil then return end
-
-        -- ffi.cast("const char**", ffi.cast("uintptr_t", weapon_vdata) + schema("CCSWeaponBaseVData", "m_szName"))[0] = model:match("/([^/]+)%.vmdl$")
-        -- native_UpdateVData(activeweapon_instance)
     end)
 
     do
@@ -193,7 +214,7 @@ xpcall(function()
                 local weapon_instance = native_GetEntityInstance(weapon_index)
                 if weapon_instance == nil then return end
 
-                model = knifes[localizes[knife_model_reference:GetString()]] or model
+                model = ffi.string(model):find("knife") and knifes[localizes[knife_model_reference:GetString()]] or model
             end, print)
 
             return hkSetModel(thisptr, model)

@@ -127,8 +127,7 @@ xpcall(function()
         return unpack(res)
     end
 
-    local ref = gui.Reference("Misc", "General", "Restrictions")
-    local knife_model_reference = gui.Combobox(ref, "model.knife", localize("#Inv_Category_melee"), localize_key(knifes))
+    local knife_model_reference = gui.Combobox(gui.Reference("Visuals", "Skins (Beta)", "List"), "model.knife", localize("#Inv_Category_melee"), localize_key(knifes))
 
     local fnUpdateSubclass = ffi.cast("void*(__fastcall*)(void*)", mem.FindPattern("client.dll", "40 53 48 83 EC 30 48 8B 41 10 48 8B D9 8B 50 30"))
 

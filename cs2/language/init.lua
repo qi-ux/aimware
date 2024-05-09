@@ -69,12 +69,12 @@ xpcall(function()
     set_translate(1)
 
     do
-        local old_language
+        local old_index
         callbacks.Register("Draw", function()
-            local language = language_ref:GetValue()
-            if not language or language == old_language then return end
-            old_language = language
-            set_translate(language + 1)
+            local index = language_ref:GetValue()
+            if not index or index == old_index then return end
+            old_index = index
+            set_translate(index + 1)
         end)
     end
 

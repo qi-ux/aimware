@@ -54,18 +54,13 @@ xpcall(function()
         end
     end
 
-    local reference_t = {}
     local function set_translate(idx)
         local data = db.language[idx].data
         if not data then return end
 
         for k1, v1 in pairs(data) do
-            for k2, v2 in pairs(db.reference[k1]) do
-                if v1[k2] then
-                    reference_t[v2[1]:GetName():lower()] = v1[k2][1]
-                else
-                    error("Please check for updates")
-                end
+            for k2, _ in pairs(db.reference[k1]) do
+                if not v1[k2] then error("Please check for updates") end
             end
         end
         translate(data)
@@ -78,18 +73,18 @@ xpcall(function()
         callbacks.Register("Draw", function()
             local language = language_ref:GetValue()
             if not language or language == old_language then return end
-
-            set_translate(language + 1)
             old_language = language
+            set_translate(language + 1)
         end)
     end
 
     do
         local gui_reference = gui.Reference
         gui.Reference = function(...)
-            local temp = {}
-            for k, v in pairs({...}) do temp[k] = reference_t[v:lower()] end
-            return gui_reference(unpack(temp))
+            set_translate(1)
+            local ref = gui_reference(...)
+            set_translate(language_ref:GetValue() + 1)
+            return ref
         end
 
         callbacks.Register("Unload", function()

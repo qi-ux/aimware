@@ -81,11 +81,10 @@ xpcall(function()
     do
         local gui_reference = gui.Reference
         gui.Reference = function(...)
-            if language_ref:GetValue() == 0 then return gui_reference(...) end
+            local index = language_ref:GetValue()
+            if index == 0 then return gui_reference(...) end
             set_translate(1)
-            local ref = gui_reference(...)
-            set_translate(language_ref:GetValue() + 1)
-            return ref
+            return gui_reference(...), set_translate(index + 1)
         end
 
         callbacks.Register("Unload", function()

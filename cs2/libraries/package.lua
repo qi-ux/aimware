@@ -121,7 +121,8 @@ local function package_require(...)
 
         if type(result) == "function" then
             loaded[name] = KEY_SENTINEL
-            local res = result(name)
+            local ok, res = pcall(result, name)
+            if not ok then return error(res) end
             loaded[name] = type(res) == "nil" and true or res
             return loaded[name]
         elseif type(result) == "string" then

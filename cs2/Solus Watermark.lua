@@ -63,5 +63,5 @@ callbacks.Register("Draw", function()
     renderer_rectangle(x, y + 2, w, h)
 
     draw.Color(255, 255, 255, 255)
-    draw.Text(math_round(x + 4), math_round(y + 7), text)
+    draw.TextShadow(math_round(x + 4), math_round(y + 7), text)
 end)

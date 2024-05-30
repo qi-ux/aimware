@@ -95,8 +95,9 @@ return setmetatable({}, {
             if typescope == nil then error(string.format("invalid type range to find '%s'", modname), 2) end
 
             for classname, declared in (function(ts)
-                local p = ffi.cast(uintptr_t_ptr, ffi.cast(uintptr_t, ts) + 0x04d0)[0]
-                local size = ffi.cast(uint16_t_ptr, ffi.cast(uintptr_t, ts) + 0x04e6)[0]
+                local kDeclaredClassesOffset = 0x438;
+                local p = ffi.cast(uintptr_t_ptr, ffi.cast(uintptr_t, ts) + kDeclaredClassesOffset + 0x8)[0]
+                local size = ffi.cast(uint16_t_ptr, ffi.cast(uintptr_t, ts) + kDeclaredClassesOffset + 0x1e)[0]
                 local i = 0
                 return function()
                     if i < size then

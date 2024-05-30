@@ -36,7 +36,7 @@ xpcall(function()
             local ent = entities.GetByIndex(userid)
 
             chatprintf(-1,
-                "\x08[\x07%s\x08] Hit %s's \x10%s\x08 for \x07%i\x08 (%i \x08remaining)",
+                " \x08[\x07%s\x08] Hit %s's \x10%s\x08 for \x07%i\x08 (%i \x08remaining)",
                 "aimware",
                 ent:GetName(),
                 hitgroup_names[e:GetInt "hitgroup" + 1] or "?",

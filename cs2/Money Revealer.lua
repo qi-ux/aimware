@@ -85,11 +85,11 @@ xpcall(function()
 
         local CSchemaSystem = ffi.cast("void*(__cdecl*)(const char*, int*)", mem.FindPattern("schemasystem.dll", "4C 8B 0D ?? ?? ?? ?? 4C 8B D2 4C 8B D9"))("SchemaSystem_001", nil)
         local native_FindTypeScopeForModule = vtable_bind(CSchemaSystem, 13, "void*(__thiscall*)(void*, const char*, void*)")
-        local native_FindDeclaredClass = vtable_thunk(29, "SchemaClassInfoData_t*(__thiscall*)(void*, const char*)")
+        local native_FindDeclaredClass = vtable_thunk(25, "SchemaClassInfoData_t*(__thiscall*)(void*, const char*)")
 
         local function create_map(typescope, size)
             local map = table_new(0, size)
-            local data = ffi.cast("uintptr_t*", ffi.cast("uintptr_t", typescope) + 0x04d0)[0]
+            local data = ffi.cast("uintptr_t*", ffi.cast("uintptr_t", typescope) + 0x0440)[0]
             for i = 0, size - 1 do
                 local classname = ffi.string(ffi.cast("const char**", ffi.cast("uintptr_t*", ffi.cast("uint8_t*", data + i * 0x18) + 0x10)[0] + 0x8)[0])
                 local declared = native_FindDeclaredClass(typescope, classname)
@@ -138,7 +138,7 @@ xpcall(function()
                     local typescope = native_FindTypeScopeForModule(modname, nil)
                     if typescope == nil then error(string.format("invalid type range to find '%s'", modname), 2) end
 
-                    local size = ffi.cast("uint16_t*", ffi.cast("uintptr_t", typescope) + 0x04e6)[0]
+                    local size = ffi.cast("uint16_t*", ffi.cast("uintptr_t", typescope) + 0x0456)[0]
                     self.map[modname] = create_map(typescope, size)
                     return self
                 end
@@ -154,6 +154,7 @@ xpcall(function()
         local res = fnGetPlayerMoney(thisptr, index)
 
         xpcall(function(...)
+            print(res)
             if res == -5 then
                 local instance = sub_180697FA0(index)
                 if instance == 0 then return end
@@ -168,5 +169,5 @@ xpcall(function()
         end, print)
 
         return res
-    end, mem.FindPattern("client.dll", "48 83 EC 28 85 D2 74 13 0F 88 ?? ?? ?? ?? 83 FA 40 0F 84 ?? ?? ?? ?? B0 01 7D 02"))
+    end, mem.FindPattern("client.dll", "48 83 EC 28 85 D2 74 24"))
 end, print)

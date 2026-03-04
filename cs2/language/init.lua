@@ -11,22 +11,22 @@ xpcall(function()
     })
 
     file.Enumerate(function(filename)
-        if not filename:match("^language/.*%.lua$") or filename == default_language or filename == "language/init.lua" then return end
+        if not filename:match "^language/.*%.lua$" or filename == default_language or filename == "language/init.lua" then return end
 
         table.insert(db.language, {
-            name = filename:match("([^\\/]-%.lua)$"):sub(1, -5),
+            name = filename:match "([^\\/]-%.lua)$":sub(1, -5),
             data = loadstring(file.Read(filename))()
         })
     end)
 
-    local menu_ref = gui.Reference("menu")
-    local language_ref = gui.Combobox(gui.Reference("settings", "advanced", "ui"), "language", "Language", (function()
+    local menu_ref = gui.Reference "menu"
+    local language_ref = gui.Combobox(gui.Reference "menu":Children()(), "language", "Language", (function()
         local t = {}
         for _, v in ipairs(db.language) do table.insert(t, v.name) end
         return unpack(t)
     end)())
 
-    language_ref:SetDescription("The language of the menu.")
+    language_ref:SetDescription "The language of the menu"
 
     local function get_children(ref, level)
         if ref:GetName() ~= "" then table.insert(db.reference[level], {ref}) end
@@ -60,7 +60,7 @@ xpcall(function()
 
         for k1, v1 in pairs(data) do
             for k2, _ in pairs(db.reference[k1]) do
-                if not v1[k2] then error("Please check for updates") end
+                if not v1[k2] then error "Please check for updates" end
             end
         end
         translate(data)
